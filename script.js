@@ -1,11 +1,17 @@
+const isMobile = window.innerWidth <= 860;
 const dot = document.getElementById("dot"), ring = document.getElementById("ring");
 let mx = window.innerWidth / 2, my = window.innerHeight / 2, rx = mx, ry = my;
-document.addEventListener("mousemove", e => { mx = e.clientX; my = e.clientY; dot.style.left = mx + "px"; dot.style.top = my + "px"; });
-(function loop() { rx += (mx - rx) * .1; ry += (my - ry) * .1; ring.style.left = rx + "px"; ring.style.top = ry + "px"; requestAnimationFrame(loop); })();
-document.querySelectorAll("a,button,.pjc,.tlc,.skc,.crt,.cl,.kpi").forEach(el => {
-  el.addEventListener("mouseenter", () => { dot.classList.add("h"); ring.classList.add("h"); });
-  el.addEventListener("mouseleave", () => { dot.classList.remove("h"); ring.classList.remove("h"); });
-});
+if (!isMobile) {
+  document.addEventListener("mousemove", e => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx + "px"; dot.style.top = my + "px";
+  });
+  (function loop() { rx += (mx - rx) * .1; ry += (my - ry) * .1; ring.style.left = rx + "px"; ring.style.top = ry + "px"; requestAnimationFrame(loop); })();
+  document.querySelectorAll("a,button,.pjc,.tlc,.skc,.crt,.cl,.kpi").forEach(el => {
+    el.addEventListener("mouseenter", () => { dot.classList.add("h"); ring.classList.add("h"); });
+    el.addEventListener("mouseleave", () => { dot.classList.remove("h"); ring.classList.remove("h"); });
+  });
+}
 
 const intro = document.getElementById("intro"), flyname = document.getElementById("flyname"), isub = document.getElementById("isub"), sbEl = document.getElementById("sb"), snp = document.getElementById("snp");
 const fn1 = flyname.querySelector(".fn1"), fn2 = flyname.querySelector(".fn2");
@@ -35,77 +41,74 @@ setTimeout(() => {
   fn2.style.textShadow = "0 0 55px rgba(232,0,42,1),0 0 110px rgba(232,0,42,.6)";
 }, 2000);
 
-// Phase 4: Sidebar slides in
-setTimeout(() => { sbEl.classList.add("in"); }, 2450);
+// Phase 4: Sidebar slides in (desktop only — mobile sidebar is always visible as sticky top bar)
+if (!isMobile) {
+  setTimeout(() => { sbEl.classList.add("in"); }, 2450);
+}
 
-// Phase 5: Seamless fly — morph font to match nameplate exactly, then fly
-setTimeout(() => {
-  // First: get nameplate position (sidebar is now visible)
-  const nr = snp.getBoundingClientRect();
-  const targetCX = nr.left + nr.width / 2;
-  const targetCY = nr.top + nr.height / 2;
-
-  // Get current flyname bounding box (big, centered)
-  const fr = flyname.getBoundingClientRect();
-  const startCX = fr.left + fr.width / 2;
-  const startCY = fr.top + fr.height / 2;
-
-  // Step A: instantly shrink font to match nameplate font size (no transition on font yet)
-  // Nameplate is 1.05rem Bebas Neue, letter-spacing 3px
-  // We morph: fn1 shrinks away, fn2 becomes the nameplate text size
-  // Use a cross-fade: flyname transitions font+position simultaneously
-
-  // Calculate translation needed when flyname is at nameplate font size
-  // We do this via a 2-step: first transition font-size+letter-spacing, then translate
-  flyname.style.transition = "none";
-
-  // Capture current pixel position
-  const curLeft = startCX;
-  const curTop = startCY;
-
-  // Switch to absolute pixel positioning for precision
-  flyname.style.left = curLeft + "px";
-  flyname.style.top = curTop + "px";
-  flyname.style.transform = "translate(-50%,-50%) scale(1)";
-
-  // Force reflow
-  flyname.offsetHeight;
-
-  // Now animate: font shrinks AND element flies to nameplate position simultaneously
-  // Fade out fn1 (MUHAMMED), keep fn2 (SINAN) but shrink to nameplate size
-  fn1.style.transition = "opacity .35s ease, font-size .9s cubic-bezier(.76,0,.24,1), letter-spacing .9s cubic-bezier(.76,0,.24,1)";
-  fn1.style.opacity = "0";
-  fn1.style.fontSize = "1.05rem";
-  fn1.style.letterSpacing = "3px";
-
-  fn2.style.transition = "font-size .9s cubic-bezier(.76,0,.24,1), letter-spacing .9s cubic-bezier(.76,0,.24,1), text-shadow .4s ease";
-  fn2.style.fontSize = "1.05rem";
-  fn2.style.letterSpacing = "3px";
-  fn2.style.textShadow = "0 0 20px rgba(232,0,42,.7)";
-  fn2.style.color = "#E8002A";
-
-  // Fly to nameplate position
-  flyname.style.transition = "left 1s cubic-bezier(.76,0,.24,1), top 1s cubic-bezier(.76,0,.24,1), opacity .3s ease .8s";
-  flyname.style.left = targetCX + "px";
-  flyname.style.top = targetCY + "px";
-  flyname.style.opacity = "0";
-
-}, 3050);
-
-// Phase 6: Nameplate glows exactly when flyname arrives & fades
-setTimeout(() => {
-  snp.classList.add("glow");
-}, 4000);
-
-// Phase 7: Fade out intro, reveal page
-setTimeout(() => {
-  intro.style.transition = "opacity .65s ease";
-  intro.style.opacity = "0";
+if (!isMobile) {
+  // Phase 5: Seamless fly — morph font to match nameplate exactly, then fly
   setTimeout(() => {
-    intro.style.display = "none";
-    document.querySelectorAll("#hero .rev").forEach((el, i) => setTimeout(() => el.classList.add("show"), i * 110));
-  }, 650);
-}, 4200);
+    const nr = snp.getBoundingClientRect();
+    const targetCX = nr.left + nr.width / 2;
+    const targetCY = nr.top + nr.height / 2;
+    const fr = flyname.getBoundingClientRect();
+    const startCX = fr.left + fr.width / 2;
+    const startCY = fr.top + fr.height / 2;
+
+    flyname.style.transition = "none";
+    flyname.style.left = startCX + "px";
+    flyname.style.top = startCY + "px";
+    flyname.style.transform = "translate(-50%,-50%) scale(1)";
+    flyname.offsetHeight;
+
+    fn1.style.transition = "opacity .35s ease, font-size .9s cubic-bezier(.76,0,.24,1), letter-spacing .9s cubic-bezier(.76,0,.24,1)";
+    fn1.style.opacity = "0";
+    fn1.style.fontSize = "1.05rem";
+    fn1.style.letterSpacing = "3px";
+
+    fn2.style.transition = "font-size .9s cubic-bezier(.76,0,.24,1), letter-spacing .9s cubic-bezier(.76,0,.24,1), text-shadow .4s ease";
+    fn2.style.fontSize = "1.05rem";
+    fn2.style.letterSpacing = "3px";
+    fn2.style.textShadow = "0 0 20px rgba(232,0,42,.7)";
+    fn2.style.color = "#E8002A";
+
+    flyname.style.transition = "left 1s cubic-bezier(.76,0,.24,1), top 1s cubic-bezier(.76,0,.24,1), opacity .3s ease .8s";
+    flyname.style.left = targetCX + "px";
+    flyname.style.top = targetCY + "px";
+    flyname.style.opacity = "0";
+  }, 3050);
+
+  // Phase 6: Nameplate glows exactly when flyname arrives & fades
+  setTimeout(() => { snp.classList.add("glow"); }, 4000);
+
+  // Phase 7: Fade out intro, reveal page
+  setTimeout(() => {
+    intro.style.transition = "opacity .65s ease";
+    intro.style.opacity = "0";
+    setTimeout(() => {
+      intro.style.display = "none";
+      document.querySelectorAll("#hero .rev").forEach((el, i) => setTimeout(() => el.classList.add("show"), i * 110));
+    }, 650);
+  }, 4200);
+
+} else {
+  // Mobile: skip the fly animation — just show the name briefly then fade out cleanly
+  setTimeout(() => {
+    flyname.style.transition = "opacity .5s ease";
+    flyname.style.opacity = "0";
+  }, 2200);
+
+  setTimeout(() => {
+    snp.classList.add("glow");
+    intro.style.transition = "opacity .7s ease";
+    intro.style.opacity = "0";
+    setTimeout(() => {
+      intro.style.display = "none";
+      document.querySelectorAll("#hero .rev").forEach((el, i) => setTimeout(() => el.classList.add("show"), i * 110));
+    }, 700);
+  }, 2700);
+}
 
 const obs = new IntersectionObserver(en => { en.forEach(e => { if (e.isIntersecting) e.target.classList.add("show"); }); }, { threshold: .1 });
 document.querySelectorAll(".rev").forEach(el => obs.observe(el));
@@ -186,3 +189,5 @@ if (contactForm) {
       });
   });
 }
+
+
