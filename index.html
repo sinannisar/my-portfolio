@@ -9,6 +9,7 @@
     href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 
 <body>
@@ -56,16 +57,32 @@
   <div id="mc">
     <section id="hero">
       <div class="hero-left">
-        <div class="hey rev"><div class="reddot"></div>Welcome to my portfolio</div>
+        <div class="hey rev">
+          <div class="reddot"></div>Welcome to my portfolio
+        </div>
         <h1 class="h1 rev">Helping Businesses<br />Grow Through<br /><em>Digital Innovation</em></h1>
         <p class="hrl rev">Software Developer <span class="bl">_</span></p>
-        <p class="hdsc rev">Results-driven Software &amp; Flutter Developer based in Dubai, UAE. I craft elegant mobile and web applications &mdash; clean code, pixel-perfect UI, shipped on time.</p>
-        <div class="hbtn rev"><a href="#projects" class="bp">View Projects</a><a href="#contact" class="bo">Let&apos;s Work Together</a></div>
+        <p class="hdsc rev">Results-driven Software &amp; Flutter Developer based in Dubai, UAE. I craft elegant mobile
+          and web applications &mdash; clean code, pixel-perfect UI, shipped on time.</p>
+        <div class="hbtn rev"><a href="#projects" class="bp">View Projects</a><a href="#contact" class="bo">Let&apos;s
+            Work Together</a></div>
         <div class="kpis rev">
-          <div class="kpi"><div class="kn">3+</div><div class="kl">Years Exp</div></div>
-          <div class="kpi"><div class="kn">8+</div><div class="kl">Projects</div></div>
-          <div class="kpi"><div class="kn">5</div><div class="kl">Certifications</div></div>
-          <div class="kpi"><div class="kn">5</div><div class="kl">Languages</div></div>
+          <div class="kpi">
+            <div class="kn">3+</div>
+            <div class="kl">Years Exp</div>
+          </div>
+          <div class="kpi">
+            <div class="kn">8+</div>
+            <div class="kl">Projects</div>
+          </div>
+          <div class="kpi">
+            <div class="kn">5</div>
+            <div class="kl">Certifications</div>
+          </div>
+          <div class="kpi">
+            <div class="kn">5</div>
+            <div class="kl">Languages</div>
+          </div>
         </div>
       </div>
       <div class="hero-right rev">
@@ -77,20 +94,26 @@
             <span class="term-lbl">sinan@portfolio: ~</span>
           </div>
           <div class="term-body">
-            <div class="tln tcmt" style="animation-delay:.1s"># Welcome to Muhammed Sinan's portfolio, Feel free to explore :)</div>
-            <div class="tln" style="animation-delay:.5s"><span class="tp">❯</span><span class="tc">flutter create <span class="thi">portfolio_app</span></span></div>
+            <div class="tln tcmt" style="animation-delay:.1s"># Welcome to Muhammed Sinan's portfolio, Feel free to
+              explore :)</div>
+            <div class="tln" style="animation-delay:.5s"><span class="tp">❯</span><span class="tc">flutter create <span
+                  class="thi">portfolio_app</span></span></div>
             <div class="tln to" style="animation-delay:.8s">Creating project portfolio_app…</div>
             <div class="tln to" style="animation-delay:1.2s">✨ All done. Ready to run.</div>
-            <div class="tln" style="animation-delay:1.8s"><span class="tp">❯</span><span class="tc">dart pub get</span></div>
+            <div class="tln" style="animation-delay:1.8s"><span class="tp">❯</span><span class="tc">dart pub get</span>
+            </div>
             <div class="tln to" style="animation-delay:2.2s">Resolving dependencies...</div>
-            <div class="tln tok" style="animation-delay:3.0s">✓  24 packages upgraded</div>
-            <div class="tln" style="animation-delay:3.6s"><span class="tp">❯</span><span class="tc">flutter run --release</span></div>
+            <div class="tln tok" style="animation-delay:3.0s">✓ 24 packages upgraded</div>
+            <div class="tln" style="animation-delay:3.6s"><span class="tp">❯</span><span class="tc">flutter run
+                --release</span></div>
             <div class="tln tprog" style="animation-delay:4.1s">
               <span class="to" style="flex-shrink:0">Building</span>
-              <div class="tpbar"><div class="tpfill"></div></div>
+              <div class="tpbar">
+                <div class="tpfill"></div>
+              </div>
               <span class="tppct">100%</span>
             </div>
-            <div class="tln tok" style="animation-delay:5.4s">✓  App running on device</div>
+            <div class="tln tok" style="animation-delay:5.4s">✓ App running on device</div>
             <div class="tln" style="animation-delay:5.8s"><span class="tp">❯</span><span class="tcur">█</span></div>
           </div>
         </div>
@@ -132,7 +155,7 @@
           <div class="ir"><span class="ilb">GitHub</span><span class="ivl"><a href="https://github.com/sinannisar"
                 target="_blank">github.com/sinannisar</a></span></div>
           <div class="ir"><span class="ilb">Degree</span><span class="ivl">B.E. Computer Science &middot; GPA
-              7.06</span></div>
+              7.2</span></div>
           <div class="ir"><span class="ilb">Status</span><span class="ivl" style="color:#22c55e">&#9679; Open to
               Work</span></div>
         </div>
@@ -449,13 +472,13 @@
           </a>
         </div>
         <div class="rev">
-          <div class="cf">
-            <div class="cfg"><label>Your Name</label><input type="text" placeholder="John Doe" /></div>
-            <div class="cfg"><label>Email</label><input type="email" placeholder="john@example.com" /></div>
-            <div class="cfg"><label>Message</label><textarea rows="5"
-                placeholder="Tell me about the opportunity&hellip;"></textarea></div>
-            <button class="bp" style="border:none;width:fit-content;cursor:none">Send Message &rarr;</button>
-          </div>
+          <form id="contact-form" class="cf">
+            <div class="cfg"><label>Your Name</label><input type="text" name="from_name" id="from_name" placeholder="John Doe" required /></div>
+            <div class="cfg"><label>Email</label><input type="email" name="from_email" id="from_email" placeholder="john@example.com" required /></div>
+            <div class="cfg"><label>Message</label><textarea rows="5" name="message" id="message"
+                placeholder="Tell me about the opportunity&hellip;" required></textarea></div>
+            <button type="submit" class="bp" style="border:none;width:fit-content;cursor:none">Send Message &rarr;</button>
+          </form>
         </div>
       </div>
     </section>
@@ -465,6 +488,10 @@
       <span style="color:var(--muted)">Software Developer &middot; Flutter &middot; Dubai, UAE</span>
       <span>Crafted with precision</span>
     </footer>
+  </div>
+  <div id="toast" class="toast">
+    <div class="toast-icon">&#10003;</div>
+    <div class="toast-msg">Message sent! We'll get back to you soon.</div>
   </div>
   <script src="script.js"></script>
 </body>
