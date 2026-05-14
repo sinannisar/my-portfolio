@@ -1521,8 +1521,7 @@ body::after {
 
   /* ────────────────────────────────────────────────────
      TOP BAR  (was the left sidebar)
-     Layout: | [avatar]  Name · Role   |  [icons]  |
-             | [Home] [About] [Skills] [Projects]  |
+     Using CSS Grid to perfectly align the flat HTML structure
   ──────────────────────────────────────────────────── */
   #sb {
     position: sticky;
@@ -1530,17 +1529,22 @@ body::after {
     left: 0;
     right: 0;
     z-index: 500;
-    /* override desktop fixed/transform */
     width: 100%;
     height: auto;
     transform: none !important;
-    /* reset desktop flex-column → row */
-    flex-direction: row;
-    flex-wrap: wrap;
+    
+    /* CSS Grid Layout */
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      "avatar name social"
+      "avatar role social"
+      "nav nav nav";
     align-items: center;
-    gap: 0;
-    /* spacing & bg */
-    padding: .55rem 1rem;
+    column-gap: 0.8rem;
+    row-gap: 0.1rem;
+    
+    padding: .6rem 1.2rem;
     border-right: none;
     border-bottom: 1px solid var(--border);
     background: rgba(12, 12, 12, .97);
@@ -1551,63 +1555,63 @@ body::after {
 
   /* ── Avatar — left of bar ── */
   .sbav {
-    width: 38px;
-    height: 38px;
+    grid-area: avatar;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     border-width: 2px;
-    flex-shrink: 0;
-    margin: 0 .65rem 0 0;
+    margin: 0; /* Reset margin */
   }
 
   /* ── Name — next to avatar ── */
   #snp {
-    font-size: .75rem;
+    grid-area: name;
+    font-size: .85rem;
     letter-spacing: 2px;
     padding: 0;
     text-align: left;
-    line-height: 1.2;
+    line-height: 1.1;
     opacity: 1 !important; /* always visible on mobile */
+    align-self: end; /* align to the bottom of its cell */
   }
 
   /* ── Role line — show it on mobile ── */
   .sbrl {
+    grid-area: role;
     display: block;
-    font-size: .5rem;
+    font-size: .55rem;
     letter-spacing: 1.5px;
     color: var(--muted);
     padding: 0;
     margin: 0;
     text-align: left;
-  }
-
-  /* ── Name + Role stacked as a flex column ── */
-  #snp ~ .sbrl {
-    /* handled via DOM order — snp and sbrl are siblings so we can't use adjacent here,
-       use the sbrl rule above directly */
+    align-self: start; /* align to the top of its cell */
   }
 
   /* ── Social icons — pushed to far right ── */
   .sbso {
+    grid-area: social;
     display: flex;
     gap: .4rem;
     padding: 0;
-    margin-left: auto;
+    margin: 0; /* Reset margin */
   }
 
   /* ── Hide desktop-only elements ── */
   .sbdiv { display: none; }
   .sbbot { display: none; }
 
-  /* ── Nav pills — full-width second row ── */
+  /* ── Nav pills — full-width bottom row ── */
   nav {
+    grid-area: nav;
     width: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: .3rem;
-    padding: .4rem 0 .3rem;
+    gap: .4rem;
+    padding: .6rem 0 .2rem;
     flex: unset;
   }
 
@@ -1615,8 +1619,8 @@ body::after {
     display: flex;
     align-items: center;
     gap: .25rem;
-    padding: .28rem .7rem;
-    font-size: .5rem;
+    padding: .3rem .8rem;
+    font-size: .55rem;
     letter-spacing: 1.5px;
     border: 1px solid var(--border);
     border-radius: 20px;
@@ -1627,7 +1631,7 @@ body::after {
 
   nav a:hover,
   nav a.act {
-    padding-left: .7rem;
+    padding-left: .8rem;
     background: rgba(232, 0, 42, .1);
     border-color: rgba(232, 0, 42, .5);
     color: var(--text);
